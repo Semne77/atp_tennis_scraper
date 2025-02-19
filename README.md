@@ -12,3 +12,12 @@ To install the package, simply run:
 
 ```bash
 pip install atp-tennis-scraper
+
+---
+
+##  Usage
+
+To get current Top 10 ATP Players, use:
+
+```python
+display_top_10()
