@@ -1,6 +1,6 @@
-import json
 from bs4 import BeautifulSoup
 import requests
+
 
 def fetch_atp_rankings():
 
@@ -126,7 +126,7 @@ def fetch_atp_rankings():
             players_data.append(player_info)
         
         count += 1
-        return players_data
+    return players_data
 
 
 def display_top_10():
@@ -145,5 +145,3 @@ def display_top_10():
         print("-" * 40)
 
 display_top_10()
-# with open("players_data.json", "w", encoding="utf-8") as json_file:
-#         json.dump(players_data, json_file, indent=4, ensure_ascii=False)
