@@ -9,20 +9,14 @@ def fetch_atp_rankings():
     response = requests.get(url)
     html_content = response.content
 
-
-    print("my tennis ")
     # Parse the HTML with BeautifulSoup
     soup = BeautifulSoup(html_content, 'html.parser')
-
-
 
     # Extract the "table" element containing the rankings
     table = soup.find("table", class_="mega-table desktop-table non-live")
 
     # Extract the "tbody" element from the table
     tbody = table.find("tbody")
-
-    #print(tbody)
 
     # Extract all "tr" (table row) elements inside "tbody"
     trs = tbody.find_all("tr")
@@ -34,10 +28,6 @@ def fetch_atp_rankings():
         for i in links:
             href = i.get('href')
             all_links.append(href)  # Add them to the list
-
-    #print(all_links)
-
-
 
     # Extract all "tr" elements that have the class "lower-row"
     ltrs = tbody.find_all("tr", class_="lower-row")
@@ -84,9 +74,6 @@ def fetch_atp_rankings():
             players_data.append(player_info)
 
         count += 1
-
-
-
         
     for ltr in ltrs:
 
@@ -144,4 +131,4 @@ def display_top_10():
         print(f"Nationality: {player['Nationality']}")
         print("-" * 40)
 
-display_top_10()
+
