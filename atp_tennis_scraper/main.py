@@ -1,119 +1,65 @@
-from bs4 import BeautifulSoup
 import requests
+from bs4 import BeautifulSoup
+
+
+RANKINGS_URL = "https://www.atptour.com/en/rankings/singles"
+PLAYER_API_URL = "https://www.atptour.com/en/-/www/players/hero/{player_id}?v=1"
+
+
+def fetch_rankings_html():
+    response = requests.get(RANKINGS_URL)
+    response.raise_for_status()
+    return response.text
+
+
+def parse_rankings_html(html, limit=10):
+    soup = BeautifulSoup(html, "html.parser")
+    table = soup.find("table", class_="mega-table desktop-table non-live")
+
+    if table is None:
+        raise ValueError("Rankings table not found")
+
+    tbody = table.find("tbody")
+    trs = tbody.find_all("tr")
+
+    return trs[:limit]
+
+
+def fetch_player_details(player_id):
+    url = PLAYER_API_URL.format(player_id=player_id)
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()
 
 
 def fetch_atp_rankings():
-
-    # Fetch the HTML content from the ATP rankings page
-    url = "https://www.atptour.com/en/rankings/singles"
-    response = requests.get(url)
-    html_content = response.content
-
-    # Parse the HTML with BeautifulSoup
-    soup = BeautifulSoup(html_content, 'html.parser')
-
-    # Extract the "table" element containing the rankings
-    table = soup.find("table", class_="mega-table desktop-table non-live")
-
-    # Extract the "tbody" element from the table
-    tbody = table.find("tbody")
-
-    # Extract all "tr" (table row) elements inside "tbody"
-    trs = tbody.find_all("tr")
-    tre = tbody.find_all("ul", class_= 'player-stats')
-    all_links = []
-    for tr in tre:
-    
-        links = tr.find_all("a")  # Find all anchor tags in the current row
-        for i in links:
-            href = i.get('href')
-            all_links.append(href)  # Add them to the list
-
-    # Extract all "tr" elements that have the class "lower-row"
-    ltrs = tbody.find_all("tr", class_="lower-row")
-
-    count = 0
+    html = fetch_rankings_html()
+    trs = parse_rankings_html(html)
 
     players_data = []
 
     for tr in trs:
-        if count == 10:  # Limit to first 10 players
-            break
-
         rank = tr.find('td', class_='rank').text.strip()
         name = tr.find('li', class_='name center').find('span').text.strip()
         points = tr.find('td', class_='points').text.strip()
 
-        # Extract the player's ATP profile URL and get the player ID
-        profile_url = "https://www.atptour.com" + all_links[count]
-        player_id = profile_url.split('/')[-2]  # Extract player ID
+        a = tr.select_one("li.name.center a")
+        profile_link = a["href"]
 
-        # Construct the API URL for player details
-        api_url = "https://www.atptour.com/en/-/www/players/hero/"+player_id+"?v=1"
+        player_id = profile_link.split("/")[-2]
 
-        response = requests.get(api_url)
-        if response.status_code == 200:
-        #  print(response.text)
-            data = response.json()  # Convert response to JSON
+        data = fetch_player_details(player_id)
 
-            # Extract player details
-            age = data.get("Age", "N/A")
-            nationality = data.get("Nationality", "N/A")
-            #rank = data.get("SglRank", "N/A")
+        players_data.append({
+            "Rank": rank,
+            "Name": name,
+            "Points": points,
+            "Age": data.get("Age"),
+            "Nationality": data.get("Nationality"),
+        })
 
-            # Store player data in a dictionary
-            player_info = {
-                "Rank": rank,
-                "Name": name,
-                "Points": points,
-                "Age": age,
-                "Nationality": nationality,
-            }
-
-            # Append the player's data to the list
-            players_data.append(player_info)
-
-        count += 1
-        
-    for ltr in ltrs:
-
-        profile_url = "https://www.atptour.com" + all_links[count]
-
-        url = profile_url
-
-        # Split the URL and get the second-to-last element
-        player_id = url.split('/')[-2]
-
-        api_url = "https://www.atptour.com/en/-/www/players/hero/"+player_id+"?v=1"
-
-
-        rank = ltr.find('td', class_='rank').text.strip()
-        
-        # Extract name
-        name = ltr.find('li', class_='name center').find('span').text.strip()
-        
-        # Extract points
-        points = ltr.find('td', class_='points').text.strip()
-
-        response = requests.get(api_url)
-        if response.status_code == 200:
-            data = response.json()  # Convert response to JSON
-
-            #Extract player information
-            age = data.get("Age", "N/A")
-            nationality = data.get("Nationality", "N/A")
-
-            player_info = {
-                "Rank": rank,
-                "Name": name,
-                "Points": points,
-                "Age": age,
-                "Nationality": nationality,
-            }
-            players_data.append(player_info)
-        
-        count += 1
     return players_data
+
 
 
 def display_top_10():

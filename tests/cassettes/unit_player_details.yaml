@@ -1,0 +1,55 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.32.5
+    method: GET
+    uri: https://www.atptour.com/en/-/www/players/hero/a0e2?v=1
+  response:
+    body:
+      string: '{"LastName":"Alcaraz","FirstName":"Carlos","MidInitial":null,"BirthCity":"El
+        Palmar, Murcia, Spain","Residence":null,"Coach":"Samuel Lopez","Pronunciation":null,"BirthDate":"2003-05-05T00:00:00","Age":22,"NatlId":"ESP","Nationality":"Spain","HeightIn":72,"HeightFt":"6''0\"","HeightCm":183,"WeightLb":163,"WeightKg":74,"PlayHand":{"Id":"R","Description":"Right-Handed"},"BackHand":{"Id":"2","Description":"Two-Handed"},"ProYear":2018,"Active":{"Id":"A","Description":"Active"},"DblSpecialist":false,"SglRank":1,"SglHiRank":1,"SglRankMove":0,"SglRankTie":false,"DblRank":null,"DblHiRank":519,"DblRankMove":0,"DblRankTie":false,"ScRelativeUrlPlayerProfile":"/en/players/carlos-alcaraz/a0e2/overview","ScRelativeUrlPlayerCountryFlag":"/en/~/media/images/flags/esp.svg","GladiatorImageUrl":null,"SglCareerWon":287,"SglCareerLost":65,"SglYtdWon":7,"SglYtdLost":0,"SglCareerTitles":25,"SglYtdTitles":1,"SglYtdPrizeFormatted":"$2,771,785","CareerPrizeFormatted":"$62,803,831","DblCareerWon":9,"DblCareerLost":6,"DblYtdWon":0,"DblYtdLost":0,"DblCareerTitles":0,"DblYtdTitles":0,"DblYtdPrizeFormatted":"$0","IsCarbonTrackerEnabled":false,"SocialLinks":[{"SocialId":"FB","SocialLink":"https://www.facebook.com/carlitosalcarazz/"},{"SocialId":"IG","SocialLink":"http://instagram.com/carlitosalcarazz"},{"SocialId":"TW","SocialLink":"https://twitter.com/carlosalcaraz"}],"CacheTags":null,"TopCourtLink":"","SglHiRankDate":"2022-09-12T00:00:00","DblHiRankDate":"2022-05-09T00:00:00"}'
+    headers:
+      Age:
+      - '3255'
+      CF-Cache-Status:
+      - HIT
+      CF-Ray:
+      - 9ce0349cadd5baea-ATL
+      Cache-Control:
+      - public, no-cache="Set-Cookie", max-age=300, s-maxage=14400
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 14 Feb 2026 23:04:36 GMT
+      Last-Modified:
+      - Sat, 14 Feb 2026 22:10:21 GMT
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cf_bm=BL7z1FgwROxE4xuUZIAM4TcYUA1fJ8KpZQl0LeqMrL0-1771110276-1.0.1.1-9lEgQmswjIaxOtnN9v803Cze1YJw0iN7Fw4q2vcMKiy3U85ESN60tByEWc1UShwfnZhxYImPBLHdSfvAQBl55kwPZe1H8zCpxikr36Y5YdM;
+        path=/; expires=Sat, 14-Feb-26 23:34:36 GMT; domain=.atptour.com; HttpOnly;
+        Secure; SameSite=None
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-CD:
+      - '1'
+      content-length:
+      - '1469'
+    status:
+      code: 200
+      message: OK
+version: 1
