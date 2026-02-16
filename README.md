@@ -16,7 +16,7 @@ pip install atp-tennis-scraper
 
 ### Usage
 
-To get all urls use:
+To see top 10 curent tennis players:
 
 ```python
 from atp_tennis_scraper import display_top_10
